@@ -1,1 +1,5 @@
 node_modules
+dist
+core/Core/bin
+core/Core/obj
+release-builds
