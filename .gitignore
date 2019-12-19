@@ -1,5 +1,5 @@
 node_modules
 dist
-core/Core/bin
-core/Core/obj
+core/bin
+core/obj
 release-builds

@@ -2,20 +2,32 @@ const { ConnectionBuilder } = require("electron-cgi");
 const url = require("url");
 const path = require("path");
 
-import { app, BrowserWindow } from "electron";
+const app = require('electron').app; 
+const BrowserWindow = require('electron').BrowserWindow; 
 
-let window: BrowserWindow | null;
+let window;
+
+// const connection = new ConnectionBuilder()
+//     .connectTo("dotnet", "run", "--project", "./core/Core")
+//     .build();
 
 const connection = new ConnectionBuilder()
-    .connectTo("dotnet", "run", "--project", "./core/Core")
+    .connectTo("./core/bin/Debug/netcoreapp3.0/electron-dotnet.exe")
     .build();
 
 connection.onDisconnect = () => {
     console.log("lost");
 };
 
-connection.send("greeting", "World from C#", (response: any) => {
+connection.send("greeting", "World", (response) => {
     window.webContents.send("greeting", response);
+    console.log(response);
+    connection.close();
+});
+
+const max = 1199999; 
+
+connection.send("runloop", max, (response) => {    
     console.log(response);
     connection.close();
 });
