@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hi World</title>
-  </head>
-  <body>
-    <p>Check out the console output</p>    
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hi World</title>
+</head>
+
+<body>
+  <p>Also check out the console output</p>
+  <h3>Greeting</h3>
+  <div id="greeting"></div>
+  <h3>RunLoop</h3>
+  <div id="runloop"></div>
+  <h3>theAnswer</h3>
+  <div id="theAnswer"></div>
+
+  <script>
+    const ipc = require('electron').ipcRenderer;
+
+    ipc.on('setGreeting', (event, message) => {
+      document.getElementById('greeting').innerText = message;
+      console.log(message) 
+    })
+
+    ipc.on('setRunLoop', (event, message) => {
+      document.getElementById('runloop').innerText = message;
+      console.log(message) 
+    })
+
+    ipc.on('setTheAnswer', (event, message) => {
+      document.getElementById('theAnswer').innerText = message;
+      console.log(message) 
+    })
+
+  </script>
+
+</body>
+
 </html>

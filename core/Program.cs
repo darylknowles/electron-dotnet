@@ -13,14 +13,16 @@ namespace Core
             
             connection.On<string, string>("greeting", name => "Hello " + name);
 
-            var total = 0; 
+            long total = 0; 
             
-            connection.On<int, string>("runloop", count => {                                
-                for (var i = 0; i < count; i++) {
+            connection.On<long, long>("runloop", count => {                                
+                for (long i = 0; i < count; i++) {
                     total++; 
                 }
-                return $"Done with {total} interations"; 
+                return total; 
             });
+            
+            connection.Send("theAnswer", 42);
             
             connection.Listen();    
         }
