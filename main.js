@@ -25,7 +25,8 @@ connection.send("greeting", "World", (response) => {
     connection.close();
 });
 
-const max = 1199999; 
+// const max = 1199999; 
+const max = 2000000; 
 
 connection.send("runloop", max, (response) => {    
     console.log(response);

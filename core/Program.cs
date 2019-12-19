@@ -15,8 +15,8 @@ namespace Core
 
             var total = 0; 
             
-            connection.On<string, string>("runloop", count => {                                
-                for (var i = 0; i < int.Parse(count); i++) {
+            connection.On<int, string>("runloop", count => {                                
+                for (var i = 0; i < count; i++) {
                     total++; 
                 }
                 return $"Done with {total} interations"; 
