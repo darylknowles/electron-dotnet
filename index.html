@@ -10,27 +10,24 @@
   <p>Also check out the console output</p>
   <h3>Greeting</h3>
   <div id="greeting"></div>
+  <h3>currentCount</h3>
+  <div id="currentCount"></div>
   <h3>RunLoop</h3>
   <div id="runloop"></div>
-  <h3>theAnswer</h3>
-  <div id="theAnswer"></div>
 
   <script>
     const ipc = require('electron').ipcRenderer;
 
     ipc.on('setGreeting', (event, message) => {
-      document.getElementById('greeting').innerText = message;
-      console.log(message) 
+      document.getElementById('greeting').innerText = message;      
     })
 
     ipc.on('setRunLoop', (event, message) => {
-      document.getElementById('runloop').innerText = message;
-      console.log(message) 
+      document.getElementById('runloop').innerText = message;      
     })
 
-    ipc.on('setTheAnswer', (event, message) => {
-      document.getElementById('theAnswer').innerText = message;
-      console.log(message) 
+    ipc.on('setCurrentCount', (event, message) => {
+      document.getElementById('currentCount').innerText = message;      
     })
 
   </script>

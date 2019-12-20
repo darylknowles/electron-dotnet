@@ -6,38 +6,7 @@ const app = require('electron').app;
 const BrowserWindow = require('electron').BrowserWindow;
 
 let window;
-
-function callDotNet(window) {
-    // const connection = new ConnectionBuilder()
-    //     .connectTo("dotnet", "run", "--project", "./core/Core")
-    //     .build();
-
-    const connection = new ConnectionBuilder()
-        .connectTo("./core/bin/Debug/netcoreapp3.0/electron-dotnet.exe")
-        .build();
-
-    connection.onDisconnect = () => {
-        console.log("lost");
-    };
-
-    connection.send("greeting", "World", (response) => {
-        console.log(response);
-        window.webContents.send('setGreeting', response);        
-        connection.close();
-    });
-
-    connection.send("runloop", 150000, (response) => {
-        console.log(response);
-        window.webContents.send('setRunLoop', response);
-        connection.close();
-    });
-
-    connection.on('theAnswer', (response) => {
-        console.log(`The answer is ${response}`);
-        window.webContents.send('setTheAnswer', response);        
-    });
-
-}
+let connection;
 
 const createWindow = () => {
     window = new BrowserWindow({
@@ -57,13 +26,36 @@ const createWindow = () => {
     );
 
     window.openDevTools();
-    
+
     window.on("closed", () => {
+        connection.close();
         window = null;
     });
 
     window.webContents.on('did-finish-load', () => {
-        callDotNet(window);
+
+        connection = new ConnectionBuilder()
+            .connectTo("./core/bin/Debug/netcoreapp3.0/electron-dotnet.exe")
+            .build();
+
+        connection.onDisconnect = () => {
+            console.log("lost");
+        };
+
+        connection.on('currentCount', (response) => {
+            window.webContents.send('setCurrentCount', response);
+            console.log(response);
+        });
+
+        connection.send("greeting", "World!", (response) => {
+            window.webContents.send('setGreeting', response);
+        });
+
+        window.webContents.send('setRunLoop', "starting loop...");
+        connection.send("runloop", 60, (response) => {
+            window.webContents.send('setRunLoop', response);
+        });
+
     })
 
 };
@@ -81,3 +73,5 @@ app.on("activate", () => {
         createWindow();
     }
 });
+
+

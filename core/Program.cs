@@ -1,4 +1,5 @@
 ﻿using System; 
+using System.Threading;
 using ElectronCgi.DotNet;
 
 namespace Core
@@ -12,17 +13,16 @@ namespace Core
                 .Build();
             
             connection.On<string, string>("greeting", name => "Hello " + name);
-
-            long total = 0; 
             
             connection.On<long, long>("runloop", count => {                                
                 for (long i = 0; i < count; i++) {
-                    total++; 
+                    connection.Send("currentCount",i);           
+                    Thread.Sleep(1000);                                 
                 }
-                return total; 
+                return count; 
             });
             
-            connection.Send("theAnswer", 42);
+            connection.Send("currentCount", 42);
             
             connection.Listen();    
         }
