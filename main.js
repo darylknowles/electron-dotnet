@@ -52,7 +52,7 @@ const createWindow = () => {
         });
 
         window.webContents.send('setRunLoop', "starting loop...");
-        connection.send("runloop", 60, (response) => {
+        connection.send("runloop", 1000, (response) => {
             window.webContents.send('setRunLoop', response);
         });
 
