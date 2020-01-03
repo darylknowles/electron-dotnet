@@ -1,6 +1,7 @@
 const { ConnectionBuilder } = require("electron-cgi");
 const url = require("url");
 const path = require("path");
+const os = require("os");
 
 const app = require('electron').app;
 const BrowserWindow = require('electron').BrowserWindow;
@@ -34,8 +35,16 @@ const createWindow = () => {
 
     window.webContents.on('did-finish-load', () => {
 
+        let exeName; 
+
+        if (os.platform() === 'WINDOWS') {
+            exeName = "electron-dotnet.exe"; 
+        } else {
+            exeName = "electron-dotnet"; 
+        }        
+
         connection = new ConnectionBuilder()
-            .connectTo("./core/bin/Debug/netcoreapp3.0/electron-dotnet.exe")
+            .connectTo(`./core/bin/Debug/netcoreapp3.0/${exeName}`)
             .build();
 
         connection.onDisconnect = () => {
