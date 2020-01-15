@@ -26,7 +26,7 @@ const createWindow = () => {
         }),
     );
 
-    window.openDevTools();
+    // window.openDevTools();
 
     window.on("closed", () => {
         connection.close();

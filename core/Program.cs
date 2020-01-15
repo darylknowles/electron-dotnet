@@ -20,7 +20,7 @@ namespace Core
             connection.On<long, long>("runloop", count => {                                
                 for (long i = 0; i < count; i++) {
                     connection.Send("currentCount",i);           
-                    Thread.Sleep(millisecondsTimeout: 100);                                 
+                    Thread.Sleep(millisecondsTimeout: 1);                                 
                 }
                 return count; 
             });
