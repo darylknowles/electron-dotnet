@@ -18,9 +18,9 @@
   "author": "darylknowles@outlook.com",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^7.1.7",
-    "electron-packager": "^14.1.1",
-    "electron-cgi": "0.0.5"
+    "electron": "^8.1.1",
+    "electron-cgi": "^1.0.1",
+    "electron-packager": "^14.2.1"
   },
   "dependencies": {}
 }
